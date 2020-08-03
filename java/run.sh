@@ -1,4 +1,6 @@
 #!/bin/sh
+DUSER=$(id -u)
+DGROUP=$(id -g)
 
 if [ $# -eq 0 ]
 then
@@ -9,8 +11,8 @@ fi
 if [ $# -eq 1 ]
 then
     echo "Starting java env at $1"
-    docker run -it --rm -v "$1":/app javaenv
+    docker run -it --rm -u $DUSER:$DGROUP -v "$1":/app javaenv
 else
     echo "Starting java env at $1 with maven repo at $2"
-    docker run -it --rm -v "$1":/app -v "$2":/home/dev/.m2 javaenv
+    docker run -it --rm -u "$DUSER":"$DGROUP" -v "$1":/app -v "$2":/.m2 javaenv
 fi

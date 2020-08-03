@@ -1,13 +1,8 @@
 FROM maven:ibmjava
 
 RUN mkdir /app
+RUN mkdir /.m2
 WORKDIR /app
-VOLUME /app
-#RUN addgroup --gid 1000 dev && \
-#    adduser --disabled-password --gecos "" --force-badname --gid 1000 dev
-
-USER dev
-RUN mkdir -p /home/dev/.m2
-VOLUME /home/dev/.m2
-
-ENTRYPOINT "/bin/sh"
+VOLUME /app /.m2
+COPY ./entrypoint.sh /bin/entrypoint.sh
+ENTRYPOINT /bin/entrypoint.sh
