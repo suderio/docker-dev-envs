@@ -1,23 +1,39 @@
 #!/bin/sh
 
-start() {
+Start() {
   docker-compose up -d
 }
 
-stop() {
+Stop() {
   docker-compose down
 }
 
+Status() {
+  docker-compose ps
+}
+
 Cli() {
+  if [ "$#" -eq 0 ]; then
     docker-compose exec cli /bin/sh
+  else
+    docker-compose exec cli "$@"
+  fi
 }
 
 Git() {
-  docker-compose exec git git "$@"
+  if [ "$#" -eq 0 ]; then
+    docker-compose exec git git --help
+  else
+    docker-compose exec git git "$@"
+  fi
 }
 
 Mvn() {
-  docker-compose exec maven mvn "$@"
+  if [ "$#" -eq 0 ]; then
+    docker-compose exec maven mvn --help
+  else
+    docker-compose exec maven mvn "$@"
+  fi
 }
 
-start
+Start
