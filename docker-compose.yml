@@ -1,26 +1,36 @@
 version: "3"
 services:
   cli:
-    build: ./cli
+    build:
+      context: .
+      dockerfile: cli.Dockerfile
+    image: devenv-cli
     container_name: "$DEVENV_NAME-cli"
+    tty: true
     volumes:
-      - $DEVENV_APP:/app
+      - $DEVENV_WORKDIR:/app
     user: "${DEVENV_UID}:${DEVENV_GID}"
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
     depends_on:
       - git
-      - ibmjava
-  ibmjava:
-    build: ./ibmjava
+      - maven
+  maven:
+    build:
+      context: .
+      dockerfile: maven-ibmjava.Dockerfile
+    image: devenv-ibmjava-maven
     container_name: "$DEVENV_NAME-maven"
+    tty: true
     volumes:
-      - $DEVENV_APP:/app
+      - $DEVENV_WORKDIR:/app
       - $DEVENV_M2:/.m2
     user: "${DEVENV_UID}:${DEVENV_GID}"
   git:
-    build: ./git
+    build:
+      context: .
+      dockerfile: git.Dockerfile
+    image: devenv-git
     container_name: "$DEVENV_NAME-git"
+    tty: true
     volumes:
-      - $DEVENV_APP:/app
+      - $DEVENV_WORKDIR:/app
     user: "${DEVENV_UID}:${DEVENV_GID}"

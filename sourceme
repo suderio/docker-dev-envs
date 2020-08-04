@@ -1,0 +1,23 @@
+#!/bin/sh
+
+start() {
+  docker-compose up -d
+}
+
+stop() {
+  docker-compose down
+}
+
+Cli() {
+    docker-compose exec cli /bin/sh
+}
+
+Git() {
+  docker-compose exec git git "$@"
+}
+
+Mvn() {
+  docker-compose exec maven mvn "$@"
+}
+
+start
