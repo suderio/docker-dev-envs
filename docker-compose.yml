@@ -13,7 +13,7 @@ services:
   maven:
     build:
       context: .
-      dockerfile: maven-ibmjava.Dockerfile
+      dockerfile: maven-ibmjava-yarn.Dockerfile
     image: devenv-ibmjava-maven
     container_name: "$DEVENV_NAME-maven"
     tty: true
