@@ -1,0 +1,26 @@
+version: "3"
+services:
+  cli:
+    build: ./cli
+    container_name: "$DEVENV_NAME-cli"
+    volumes:
+      - $DEVENV_APP:/app
+    user: "${DEVENV_UID}:${DEVENV_GID}"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    depends_on:
+      - git
+      - ibmjava
+  ibmjava:
+    build: ./ibmjava
+    container_name: "$DEVENV_NAME-maven"
+    volumes:
+      - $DEVENV_APP:/app
+      - $DEVENV_M2:/.m2
+    user: "${DEVENV_UID}:${DEVENV_GID}"
+  git:
+    build: ./git
+    container_name: "$DEVENV_NAME-git"
+    volumes:
+      - $DEVENV_APP:/app
+    user: "${DEVENV_UID}:${DEVENV_GID}"
