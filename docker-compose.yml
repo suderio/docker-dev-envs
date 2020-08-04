@@ -10,9 +10,6 @@ services:
     volumes:
       - $DEVENV_WORKDIR:/app
     user: "${DEVENV_UID}:${DEVENV_GID}"
-    depends_on:
-      - git
-      - maven
   maven:
     build:
       context: .
